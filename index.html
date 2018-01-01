@@ -1,0 +1,140 @@
+<html>
+<head>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js" integrity="sha512-lInM/apFSqyy1o6s89K4iQUKg6ppXEgsVxT35HbzUupEVRh2Eu9Wdl4tHj7dZO0s1uvplcYGmt3498TtHq+log==" crossorigin=""></script>
+<style>
+		#map {
+			width: 100%;
+			height: 100%;
+		}
+
+    .info {
+    padding: 6px 8px;
+    font: 14px/16px Arial, Helvetica, sans-serif;
+    background: white;
+    background: rgba(255,255,255,0.8);
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
+    border-radius: 5px;
+}
+.info h4 {
+    margin: 0 0 5px;
+    color: #777;
+}
+	</style>
+<body>
+  <div id="map"></div>
+  <script type="text/javascript" src="aoi.js"></script>
+  <script type="text/javascript" src="jpnagar.js"></script>
+  <script type="text/javascript" src="indiranagar.js"></script>
+  <script type="text/javascript">
+  var map = L.map('map').setView([12.9899, 77.6280], 12);
+
+   var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+		attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+	}).addTo(map);
+
+  var Satellite = L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+        maxZoom: 18,
+        id: 'mapbox.satellite',
+        accessToken: 'pk.eyJ1IjoidmVua2FubmEiLCJhIjoiY2oxa2w0Y3J2MDF2dTJ3cGJzbWhrYTh3ayJ9.BA-1iL9BvWyVhuAZR75mgQ'
+    });
+
+
+  function style(feature) {
+    return {
+      weight: 2,
+      opacity: 1,
+      color: 'blue',
+      fillOpacity: 0
+    };
+  }
+
+
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>Devided Mapping Areas in Bangalore</h4>' +  (props ?
+        '<b>' + props.name + '</b><br />' + props.Area + ' km<sup>2</sup>'
+        : 'Hover over a state');
+};
+
+info.addTo(map);
+
+function highlightFeature(e) {
+  var layer = e.target;
+
+  layer.setStyle({
+      weight: 5,
+      color: 'green',
+      dashArray: '',
+      fillOpacity: 0
+  });
+
+  if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+      layer.bringToFront();
+      info.update(layer.feature.properties);
+  }
+}
+
+function resetHighlight(e) {
+  geojson.resetStyle(e.target);
+  info.update();
+}
+
+function zoomToFeature(e) {
+  map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(feature, layer) {
+  layer.on({
+      mouseover: highlightFeature,
+      mouseout: resetHighlight,
+      click: zoomToFeature
+  });
+}
+
+var geojson = L.geoJSON(aoi, {
+  style:style,
+  onEachFeature: onEachFeature
+}).addTo(map);
+
+var myStyle = {
+      "color": "red",
+      "weight": 5,
+      "opacity": 0.65
+  };
+
+  var myStyle1 = {
+        "color": "navy",
+        "weight": 5,
+        "opacity": 0.65
+    };
+
+var jpnagar = L.geoJSON(jpnagar, {
+  style:myStyle
+});
+var indiranagar = L.geoJSON(indiranagar, {
+  style: myStyle1
+});
+
+var baseMaps ={
+    "Open Street Map":osm,
+    "Mapbox Satellite": Satellite
+  };
+  var overlayMaps ={
+    "Area Boundaries":geojson,
+    "JP Nagar":jpnagar,
+    "Indiranagar":indiranagar
+  };
+  L.control.layers(baseMaps,overlayMaps).addTo(map);
+
+  </script>
+</body>
+</html>
