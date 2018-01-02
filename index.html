@@ -26,6 +26,7 @@
   <script type="text/javascript" src="aoi.js"></script>
   <script type="text/javascript" src="jpnagar.js"></script>
   <script type="text/javascript" src="indiranagar.js"></script>
+ <script type="text/javascript" src="malleswaram.js"></script>
   <script type="text/javascript">
   var map = L.map('map').setView([12.9899, 77.6280], 12);
 
@@ -116,6 +117,11 @@ var myStyle = {
         "weight": 5,
         "opacity": 0.65
     };
+var myStyle2 = {
+        "color": "red",
+        "weight": 5,
+        "opacity": 0.65
+    };
 
 var jpnagar = L.geoJSON(jpnagar, {
   style:myStyle
@@ -123,7 +129,9 @@ var jpnagar = L.geoJSON(jpnagar, {
 var indiranagar = L.geoJSON(indiranagar, {
   style: myStyle1
 });
-
+var malleswaram = L.geoJSON(malleswaram, {
+  style: myStyle2
+});
 var baseMaps ={
     "Open Street Map":osm,
     "Mapbox Satellite": Satellite
@@ -131,7 +139,8 @@ var baseMaps ={
   var overlayMaps ={
     "Area Boundaries":geojson,
     "JP Nagar":jpnagar,
-    "Indiranagar":indiranagar
+    "Indiranagar":indiranagar,
+    "Malleswaram":malleswaram
   };
   L.control.layers(baseMaps,overlayMaps).addTo(map);
 
