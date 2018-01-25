@@ -38,10 +38,17 @@
         accessToken: 'pk.eyJ1IjoidmVua2FubmEiLCJhIjoiY2oxa2w0Y3J2MDF2dTJ3cGJzbWhrYTh3ayJ9.BA-1iL9BvWyVhuAZR75mgQ'
     });
 
+  var Drive =  L.tileLayer('https://api.mapbox.com/styles/v1/venkanna/cjc0sxuts2otw2rpjpljbfhce/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoidmVua2FubmEiLCJhIjoiY2oxa2w0Y3J2MDF2dTJ3cGJzbWhrYTh3ayJ9.BA-1iL9BvWyVhuAZR75mgQ', {
+maxZoom: 18,
+attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+});
+
 
 function getColor(d) {
-  return d > 0 ? 'red' :
-         d == 0 ? '#5DADE2' :
+  return d > 0 ? '#9B59B6' :
+         d == 0 ? '#D4AC0D' :
    '';
 }
  function getOpacity(f) {
@@ -120,7 +127,8 @@ var geojson = L.geoJSON(aoi, {
 
 var baseMaps ={
     "Open Street Map":osm,
-    "Mapbox Satellite": Satellite
+    "Mapbox Satellite": Satellite,
+    "Mapbox Drives": Drive
   };
   var overlayMaps ={
     "Area Boundaries":geojson
