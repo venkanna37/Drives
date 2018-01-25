@@ -24,9 +24,7 @@
 <body>
   <div id="map"></div>
   <script type="text/javascript" src="aoi.js"></script>
-  <script type="text/javascript" src="jpnagar.js"></script>
-  <script type="text/javascript" src="indiranagar.js"></script>
- <script type="text/javascript" src="malleswaram.js"></script>
+
   <script type="text/javascript">
   var map = L.map('map').setView([12.9899, 77.6280], 12);
 
@@ -41,12 +39,24 @@
     });
 
 
+function getColor(d) {
+  return d > 0 ? 'red' :
+         d == 0 ? '#5DADE2' :
+   '';
+}
+ function getOpacity(f) {
+   return f > 0 ? 0.7 :
+          f == 0 ? 0.7 :
+          0;
+ }
+
   function style(feature) {
     return {
       weight: 2,
       opacity: 1,
       color: 'blue',
-      fillOpacity: 0
+      fillOpacity: getOpacity(feature.properties.Id),
+      fillColor: getColor(feature.properties.Id)
     };
   }
 
@@ -62,7 +72,7 @@ info.onAdd = function (map) {
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>Devided Mapping Areas in Bangalore</h4>' +  (props ?
-        '<b>' + props.name + '</b><br />' + props.Area + ' km<sup>2</sup>'
+        '<b> AOI </b>' + props.name + '</br>' + '<b> Area </b>' + props.Area + ' km<sup>2</sup>' + '</br>' + '<b> Team </b>' + props.Team
         : 'Hover over a state');
 };
 
@@ -106,43 +116,17 @@ var geojson = L.geoJSON(aoi, {
   onEachFeature: onEachFeature
 }).addTo(map);
 
-var myStyle = {
-      "color": "#9C640C",
-      "weight": 5,
-      "opacity": 0.65
-  };
+//Layer group
 
-  var myStyle1 = {
-        "color": "#34495E",
-        "weight": 5,
-        "opacity": 0.65
-    };
-var myStyle2 = {
-        "color": "red",
-        "weight": 5,
-        "opacity": 0.65
-    };
-
-var jpnagar = L.geoJSON(jpnagar, {
-  style:myStyle
-});
-var indiranagar = L.geoJSON(indiranagar, {
-  style: myStyle1
-});
-var malleswaram = L.geoJSON(malleswaram, {
-  style: myStyle2
-});
 var baseMaps ={
     "Open Street Map":osm,
     "Mapbox Satellite": Satellite
   };
   var overlayMaps ={
-    "Area Boundaries":geojson,
-    "JP Nagar":jpnagar,
-    "Indiranagar":indiranagar,
-    "Malleswaram":malleswaram
+    "Area Boundaries":geojson
   };
   L.control.layers(baseMaps,overlayMaps).addTo(map);
+
 
   </script>
 </body>
