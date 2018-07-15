@@ -5,6 +5,7 @@
 This map is about visualising edits of OpenStreetMap, those were added while field mapping and also showing mapping status of the each area.
 
 As a Goal of Mapping Bangalore, we collected a lot of data with one large team and added to the OpenStreetMap. Data include Road names,Missing streets and Navigation data like
+
        - Turn Restrictions
        - Stop signs
        - Speed limits
@@ -27,15 +28,18 @@ For collecting and adding data to OpenStreetMap, we used different tools such as
          [x] Area Boundaries
 
  
-- In those three base layers OpenStreetMap and Mapbox Satellite are useful for location identification
-- Mapbox drives layer is showing edits of OpenStreetMap those are edited by field mapping, those mapped before going into field using satellite imagery and after coming back from field. The red color roads are edited roads on OpenStreetMap
+- In those three base layers OpenStreetMap and Mapbox Satellite are useful for location identification.
+
+- Mapbox drives layer is showing edits of OpenStreetMap those are edited by field mapping, those mapped before going into field using satellite imagery and after coming back from field. The red color roads are edited roads on OpenStreetMap.
 
 <p align = "center" >
 <img width = "250" height = "250" src = "/Screenshots/sc3.png">
 </p>
 
-- In the above image and map Yellow color indicates mapped areas those are covered in trial drives and Purple color indicates mapped areas those are covered after planning
--If the cursor is on area of one polygon it shows following details
+- In the above image and map Yellow color indicates mapped areas those are covered in trial drives and Purple color indicates mapped areas those are covered after planning.
+
+- If the cursor is on area of one polygon it shows following details
+
        - Area name
        - Area in km<sup>2</sup>
        - Team members names
